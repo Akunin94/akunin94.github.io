@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uzun narda — o'yinga taklif</title>
+<meta property="og:title" content="Uzun narda — do'stingiz sizni o'yinga chaqiryapti">
+<meta property="og:description" content="Uzun narda o'ynaymizmi? Havolani oching — o'yin to'g'ridan-to'g'ri xonada ochiladi. / Сыграем в длинные нарды? Откройте ссылку — игра откроется прямо в комнате.">
+<meta property="og:image" content="https://akunin94.github.io/narda/og.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Uzun narda">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  body { margin: 0; background: #231710; color: #F3E4CB; font-family: Roboto, system-ui, sans-serif; }
+  main { max-width: 440px; margin: 0 auto; padding: 28px 22px 40px; display: flex; flex-direction: column; gap: 16px; }
+  img { width: 100%; border-radius: 14px; }
+  h1 { margin: 0; font-size: 24px; color: #E8BC57; line-height: 1.25; }
+  p { margin: 0; font-size: 15px; line-height: 1.45; color: #D8C3A3; }
+  .code { align-self: center; font-size: 34px; font-weight: 800; letter-spacing: .14em; color: #E8BC57; border: 1.5px dashed #A9781F; border-radius: 14px; padding: 8px 18px; }
+  a.btn { display: flex; align-items: center; justify-content: center; min-height: 52px; border-radius: 14px; font-size: 16px; font-weight: 700; text-decoration: none; }
+  .primary { background: #E8BC57; color: #231710; }
+  .secondary { border: 1.5px solid #A9781F; color: #F3E4CB; }
+  .ru { color: #B79C7B; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="og.png" alt="Uzun narda">
+  <h1>Do'stingiz sizni Uzun narda o'yiniga chaqiryapti</h1>
+  <p class="ru">Друг зовёт вас сыграть в длинные нарды.</p>
+  <div class="code" id="code" hidden></div>
+  <a class="btn primary" id="open" href="#">O'yinni ochish · Открыть игру</a>
+  <a class="btn secondary" id="play" href="https://play.google.com/store/apps/details?id=uz.uzunnarda.narda">Google Play'dan o'rnatish · Установить</a>
+  <p>O'rnatgandan keyin o'yin xonani o'zi ochadi. Ochmasa — «Kod bilan kirish» va yuqoridagi kodni kiriting.</p>
+  <p class="ru">После установки игра сама откроет комнату. Если нет — «Войти по коду» и введите код выше.</p>
+</main>
+<script>
+  (function () {
+    var code = (new URLSearchParams(location.search).get('c') || '').replace(/\D/g, '').slice(0, 6);
+    var pkg = 'uz.uzunnarda.narda';
+    var play = 'https://play.google.com/store/apps/details?id=' + pkg +
+      (code ? '&referrer=' + encodeURIComponent('room=' + code) : '');
+    document.getElementById('play').href = play;
+    if (code.length === 6) {
+      var box = document.getElementById('code');
+      box.textContent = code;
+      box.hidden = false;
+    }
+    // Android: открыть игру, а если её нет — Play с кодом комнаты в referrer.
+    document.getElementById('open').href = 'intent://akunin94.github.io/narda/?c=' + code +
+      '#Intent;scheme=https;package=' + pkg +
+      ';S.browser_fallback_url=' + encodeURIComponent(play) + ';end';
+  })();
+</script>
+</body>
+</html>
